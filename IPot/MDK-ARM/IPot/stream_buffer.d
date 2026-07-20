@@ -1,0 +1,14 @@
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
+ipot\stream_buffer.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+ipot\stream_buffer.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+ipot\stream_buffer.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
+ipot\stream_buffer.o: ../Core/Inc/FreeRTOSConfig.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+ipot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/stream_buffer.h

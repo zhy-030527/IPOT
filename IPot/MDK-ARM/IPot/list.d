@@ -1,0 +1,12 @@
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
+ipot\list.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+ipot\list.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
+ipot\list.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+ipot\list.o: ../Core/Inc/FreeRTOSConfig.h
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+ipot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
