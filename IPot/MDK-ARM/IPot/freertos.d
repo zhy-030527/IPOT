@@ -51,5 +51,7 @@ ipot\freertos.o: ../Hardware/Driver_Moisture.h
 ipot\freertos.o: ../Hardware/Driver_LCD.h
 ipot\freertos.o: ../Hardware/Driver_ESP8266.h
 ipot\freertos.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
+ipot\freertos.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
+ipot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 ipot\freertos.o: ../Hardware/Driver_Light.h
 ipot\freertos.o: ../Hardware/Driver_Water.h

@@ -50,3 +50,6 @@ ipot\driver_bh1750.o: ..\Hardware\Driver_UART.h
 ipot\driver_bh1750.o: ..\Hardware\Driver_LCD.h
 ipot\driver_bh1750.o: ..\Hardware\Driver_ESP8266.h
 ipot\driver_bh1750.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
+ipot\driver_bh1750.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+ipot\driver_bh1750.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
+ipot\driver_bh1750.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h

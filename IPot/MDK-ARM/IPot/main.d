@@ -56,4 +56,6 @@ ipot\main.o: ../Hardware/Driver_BH1750.h
 ipot\main.o: ../Hardware/Driver_LCD.h
 ipot\main.o: ../Hardware/Driver_ESP8266.h
 ipot\main.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
+ipot\main.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
+ipot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 ipot\main.o: ../Hardware/Driver_Delay.h

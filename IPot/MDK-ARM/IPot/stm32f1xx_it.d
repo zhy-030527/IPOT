@@ -35,3 +35,17 @@ ipot\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h
 ipot\stm32f1xx_it.o: ../Hardware/Driver_ESP8266.h
 ipot\stm32f1xx_it.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 ipot\stm32f1xx_it.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+ipot\stm32f1xx_it.o: ../Core/Inc/FreeRTOSConfig.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+ipot\stm32f1xx_it.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+ipot\stm32f1xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h

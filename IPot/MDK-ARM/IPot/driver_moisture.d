@@ -16,8 +16,11 @@ ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS
 ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+ipot\driver_moisture.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
 ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+ipot\driver_moisture.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 ipot\driver_moisture.o: ../Core/Inc/gpio.h
 ipot\driver_moisture.o: ../Core/Inc/main.h
 ipot\driver_moisture.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h

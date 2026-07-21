@@ -16,6 +16,14 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include "FreeRTOS.h"                   // ARM.FreeRTOS::RTOS:Core
+#include "task.h"                       // ARM.FreeRTOS::RTOS:Core
+#include "cmsis_os2.h"
+#include "queue.h"
+#include "string.h"
+#include "stdio.h"
+#include "semphr.h"
+#include "timers.h"
 
 #define RX_BUF_MAX_LEN  512                  // 接收缓冲区大小
 #define WIFI_SSID			"zong"
@@ -32,6 +40,7 @@ typedef enum {
     SENSOR_DHT11,   // 温湿度传感器
     SENSOR_BH1750,      // 光照传感器
     SENSOR_SOIL,        // 土壤湿度传感器
+	SENSOR_TIMEOUT_FORCE_SEND,
 } SensorType_t;
 
 // 传感器数据包
@@ -58,6 +67,8 @@ typedef struct {
 
 uint8_t ESP8266_Init(void);
 void ESP8266_Connect_Test(void);
+void Pack_And_Send_Data(void);
+void vDataWatchdogCallback(TimerHandle_t xTimer);
 
 #endif
 

@@ -33,9 +33,6 @@ ipot\driver_esp8266.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 ipot\driver_esp8266.o: ..\Hardware\Driver_ESP8266.h
 ipot\driver_esp8266.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 ipot\driver_esp8266.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
-ipot\driver_esp8266.o: ..\Hardware\Driver_Delay.h
-ipot\driver_esp8266.o: ..\Hardware\Driver_UART.h
-ipot\driver_esp8266.o: ..\Hardware\Driver_LCD.h
 ipot\driver_esp8266.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 ipot\driver_esp8266.o: ../Core/Inc/FreeRTOSConfig.h
 ipot\driver_esp8266.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -49,3 +46,7 @@ ipot\driver_esp8266.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/
 ipot\driver_esp8266.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ipot\driver_esp8266.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
 ipot\driver_esp8266.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+ipot\driver_esp8266.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+ipot\driver_esp8266.o: ..\Hardware\Driver_Delay.h
+ipot\driver_esp8266.o: ..\Hardware\Driver_UART.h
+ipot\driver_esp8266.o: ..\Hardware\Driver_LCD.h

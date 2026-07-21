@@ -18,13 +18,7 @@
 #include "Driver_UART.h"
 #include "Driver_LCD.h"
 
-#include "FreeRTOS.h"                   // ARM.FreeRTOS::RTOS:Core
-#include "task.h"                       // ARM.FreeRTOS::RTOS:Core
-#include "cmsis_os2.h"
-#include "queue.h"
-#include "string.h"
-#include "stdio.h"
-#include "semphr.h"
+
 
 
 
@@ -33,6 +27,9 @@ char ESP8266_rx_buffer[RX_BUF_MAX_LEN];		//缓冲区大小1024
 uint16_t ESP8266_rx_len = 0;				//缓冲区已使用字节
 uint16_t g_Auto_Light_Mode;
 uint16_t g_Auto_Water_Mode;
+//传感器数据
+uint16_t json_len;
+char json_buf[350];
 
 static SendData ReceiveData;
 static Collector MyCollector;
@@ -40,6 +37,8 @@ static Collector MyCollector;
 QueueHandle_t xSensorQueue;
 QueueHandle_t xLEDQueue;
 QueueHandle_t xPumpQueue;
+//定时器初始化
+TimerHandle_t DatadogHandle_t;
 
 extern SemaphoreHandle_t xRxSemaphore;
 extern bool g_Led_status;
@@ -178,6 +177,9 @@ uint8_t ESP8266_Init(void)
     extern void Water_Test(void *params);
     xTaskCreate(Water_Test, "Water_Test", 32, NULL, osPriorityNormal2, NULL);
 	
+	//创建软件定时器（数据看门狗）
+	DatadogHandle_t = xTimerCreate("DatadogHandle", pdMS_TO_TICKS(5000), pdFALSE, (void *)0, vDataWatchdogCallback);
+
 	return 0;
 	
 }
@@ -293,8 +295,6 @@ void ESP8266_SendToOneNet(char *json_buf, uint16_t json_len)
 // 
 void ESP8266_SendTask(void *params)
 {
-	uint16_t json_len;
-	char json_buf[350];
 	ESP8266_Connect_Test();
 //	UBaseType_t freeNum;
 //	TaskHandle_t xTaskHandle;
@@ -303,9 +303,13 @@ void ESP8266_SendTask(void *params)
 //		xTaskHandle = xTaskGetCurrentTaskHandle();
 //		freeNum = uxTaskGetStackHighWaterMark(xTaskHandle);
 //		printf("%ld",freeNum);
-		
 		if(xQueueReceive( xSensorQueue, &ReceiveData, portMAX_DELAY) == pdPASS)
 		{
+			//如果数据是新的一组里的数据，开启新的一轮定时器
+			if (MyCollector.Rflags == 0) 
+			{
+				xTimerReset(DatadogHandle_t, 0); // Start/Reset 定时器
+			}
 			//获取三个传感器的数据收集并进行整合
 			switch(ReceiveData.type)
 			{
@@ -325,6 +329,10 @@ void ESP8266_SendTask(void *params)
 					MyCollector.Data.Soil_moisture = ReceiveData.Soil_moisture;
 					MyCollector.Rflags |= 0x04;  // 设置土壤湿度的标志位
 				break;
+				//接收到强制发送命令
+				case SENSOR_TIMEOUT_FORCE_SEND:
+					Pack_And_Send_Data();
+				break;
 				
 				default:
 					
@@ -334,19 +342,40 @@ void ESP8266_SendTask(void *params)
 		//当收集到的标志位为0111时，代表四个数据都已获取，进行打包并发送
 		if(MyCollector.Rflags == 0x07)
 		{
-			MyCollector.Data.Pump_status = g_Water_status;
-			MyCollector.Data.Led_status = g_Led_status;
-			json_len = ESP8266_PackData(&MyCollector.Data,json_buf, sizeof(json_buf));
-			ESP8266_SendToOneNet(json_buf,json_len);
-			
-			// 重置批次
-			MyCollector.Rflags = 0;
-			memset(&MyCollector.Data, 0, sizeof(MyCollector.Data));
-			//memset(&MyCollector.Rflags, 0, sizeof(SendData));
+			Pack_And_Send_Data();
+			xTimerStop(DatadogHandle_t, 0); 
+			//memset(&MyCollector.Rflags, -1, sizeof(SendData));
 		}
-		//vTaskDelay(3000);	数据同步性很差的罪魁祸首是这个
 	}
 }
+
+//数据打包及重置函数
+void Pack_And_Send_Data(void)
+{
+	MyCollector.Data.Pump_status = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_1);		//直接改为获取管脚高低电平
+	MyCollector.Data.Led_status = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_0);
+	json_len = ESP8266_PackData(&MyCollector.Data,json_buf, sizeof(json_buf));
+	ESP8266_SendToOneNet(json_buf,json_len);
+	// 重置批次,所有数据初始值为0
+	MyCollector.Rflags = 0;
+	//重置结构体为 -1
+	MyCollector.Data.Temperature = -1;
+	MyCollector.Data.Humidity = -1;
+	MyCollector.Data.Light = -1;
+	MyCollector.Data.Soil_moisture = -1;
+}
+
+
+//定时器超时回调函数（禁止在回调函数中进行阻塞操作）
+void vDataWatchdogCallback(TimerHandle_t xTimer) 
+{
+    SendData timeout_cmd;
+    timeout_cmd.type = SENSOR_TIMEOUT_FORCE_SEND; // 宏定义一个特殊类型
+    
+    // 注意：在定时器回调中，等同于中断，建议使用不阻塞的发送方式
+    xQueueSend(xSensorQueue, &timeout_cmd, 0); 
+}
+
 
 /**********************************************************************
  * 函数名称： Extract_JSON_Bool
@@ -410,13 +439,19 @@ void ESP8266_ReceiveTask(void *params)
 			
 			//解析自动模式控制
 			status = Extract_JSON_Bool(ESP8266_rx_buffer, "\"Auto_light_mode\"");
-			if (status != -1) {
+			if (status != -1) 
+			{
 				g_Auto_Light_Mode = status; // 直接更新全局变量
-				}
+				cmd = CMD_OFF ;
+				xQueueSend(xLEDQueue, &cmd, 0);
+			}
 			
 			status = Extract_JSON_Bool(ESP8266_rx_buffer, "\"Auto_water_mode\"");
-			if (status != -1) {
+			if (status != -1)
+			{
 				g_Auto_Water_Mode = status; // 直接更新全局变量
+				cmd = CMD_OFF ;
+				xQueueSend(xPumpQueue, &cmd, 0);
 			}
 			//清空缓存
 			ESP8266_Clear_Buffer();
